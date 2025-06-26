@@ -1,144 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mystery Box</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: radial-gradient(circle, #1a0933, #000);
-            overflow: hidden;
-            font-family: Arial, sans-serif;
-        }
-        .container {
-            position: relative;
-            text-align: center;
-        }
-        .mystery-box {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(45deg, #ffd700, #ff4500);
-            border-radius: 15px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 60px rgba(255, 69, 0, 0.5);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-        }
-        .mystery-box:hover {
-            transform: scale(1.1);
-        }
-        .box-lid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, #c0c0c0, #ffd700);
-            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
-            transition: transform 1s ease;
-        }
-        .box-open .box-lid {
-            transform: translateY(-100%);
-        }
-        .content {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-            font-size: 20px;
-            text-shadow: 0 0 10px #fff;
-            text-align: center;
-        }
-        .box-open .content {
-            display: block;
-            animation: fadeIn 1s ease;
-        }
-        .particles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-        .particle {
-            position: absolute;
-            width: 5px;
-            height: 5px;
-            background: #ffd700;
-            border-radius: 50%;
-            animation: particle 2s ease infinite;
-            opacity: 0;
-        }
-        @keyframes particle {
-            0% { transform: translateY(0); opacity: 0.8; }
-            100% { transform: translateY(-200px); opacity: 0; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translate(-50%, -30%); }
-            to { opacity: 1; transform: translate(-50%, -50%); }
-        }
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background: #ffd700;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        button:hover {
-            background: #ff4500;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="mystery-box" id="mysteryBox">
-            <div class="box-lid"></div>
-            <div class="content" id="boxContent">Selamat! Anda mendapatkan hadiah IPHONE 16 PROMAX!</div>
-            <div class="particles" id="particles"></div>
-        </div>
-        <button onclick="resetBox()">Reset</button>
-    </div>
-    <script>
-        const box = document.getElementById('mysteryBox');
-        const particlesContainer = document.getElementById('particles');
-
-        function createParticle() {
-            const particle = document.createElement('div');
-            particle.classList.add('particle');
-            particle.style.left = Math.random() * 100 + '%';
-            particle.style.animationDelay = Math.random() + 's';
-            particlesContainer.appendChild(particle);
-            setTimeout(() => particle.remove(), 2000);
-        }
-
-        function startParticles() {
-            setInterval(createParticle, 200);
-        }
-
-        box.addEventListener('click', () => {
-            if (!box.classList.contains('box-open')) {
-                box.classList.add('box-open');
-                startParticles();
-            }
-        });
-
-        function resetBox() {
-            box.classList.remove('box-open');
-            particlesContainer.innerHTML = '';
-        }
-    </script>
-</body>
-</html>
+<p><a href="https://direktur-4d.website/register?referral_code=direkturvip"><img style="display: block; margin-left: auto; margin-right: auto;" src="https://i.ibb.co/5WzRqpsZ/a001.jpg" /></a></p>
+<h2 style="text-align: center;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">DAFTAR</a>&nbsp; &nbsp;<a href="https://direktur-4d.website/register?referral_code=direkturvip">LOGIN</a></h2>
+<p>&nbsp;</p>
+<p style="text-align: center;"><strong>REKOMEN SITUS RESMI TERPERCAYA 2025</strong></p>
+<p style="text-align: center;">&nbsp;</p>
+<table style="border-collapse: collapse; width: 100%; height: 18px;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 100%; height: 18px; text-align: center;">PROMO TERBAIK&nbsp; 2025</td>
+</tr>
+</tbody>
+</table>
+<table style="border-collapse: collapse; width: 100%; height: 96px;" border="1">
+<tbody>
+<tr style="height: 14px;">
+<td style="width: 56.7124%; height: 14px; text-align: left;">⭐<span style="color: #ffffff;">Bonus Deposit Harian 10%</span></td>
+<td style="width: 43.2876%; height: 14px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+<tr style="height: 10px;">
+<td style="width: 56.7124%; height: 10px;">⭐<span style="color: #ffffff;">New Member 20%&nbsp;</span></td>
+<td style="width: 43.2876%; height: 10px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 56.7124%; height: 18px;">⭐<span style="color: #ffffff;">Rollingan Harian 0.5%</span></td>
+<td style="width: 43.2876%; height: 18px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 56.7124%; height: 18px;">⭐<span style="color: #ffffff;">CASHBACK MINGGUAN 5%</span></td>
+<td style="width: 43.2876%; height: 18px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 56.7124%; height: 18px;">⭐<span style="color: #ffffff;">CASHBACK BULANAN 10%</span></td>
+<td style="width: 43.2876%; height: 18px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 56.7124%; height: 18px;">⭐<span style="color: #ffffff;">Bonus Free Download APK 10Rb</span></td>
+<td style="width: 43.2876%; height: 18px;"><a href="https://direktur-4d.website/register?referral_code=direkturvip">KLIK DI SINI</a></td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
