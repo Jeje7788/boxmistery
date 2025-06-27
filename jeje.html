@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Generator Tiket</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 30px;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px;
+      border-radius: 6px;
+      border: none;
+    }
+    input {
+      width: 200px;
+    }
+    button {
+      background: gold;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      background: #222;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #444;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <h2>🎫 Admin - Generator Tiket Hadiah</h2>
+      <input type="text" id="kode" placeholder="Kode Tiket" />
+        <input type="text" id="username" placeholder="Username" />
+  <input type="text" id="hadiah" placeholder="Hadiah" />
+  <button onclick="buatTiket()">Buat Tiket</button>
+
+  <table>
+    <thead>
+      <tr>
+        <th>kode tiket</th>   
+        <th>Username</th>
+        <th>Hadiah</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="tabelTiket"></tbody>
+  </table>
+
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyAu5TUurLnkUTmZMFzG4UoIHMeFdyj0c2E",
+  authDomain: "misterybox-c0e5f.firebaseapp.com",
+  databaseURL: "https://misterybox-c0e5f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "misterybox-c0e5f",
+  storageBucket: "misterybox-c0e5f.appspot.com",
+  messagingSenderId: "431263759277",
+  appId: "1:431263759277:web:6a470a789184d373f6ff24"
+};
+
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function buatTiket() {
+      const username = document.getElementById("username").value.trim();
+      const kode = document.getElementById("kode").value.trim();
+      const hadiah = document.getElementById("hadiah").value.trim();
+      if (!username || !kode || !hadiah) {
+        alert("Isi semua kolom");
+        return;
+      }
+
+      db.ref("tiket/" + kode).set({
+        username: username,
+        hadiah: hadiah,
+        sudah_dipakai: false
+      }).then(() => {
+        alert("Tiket berhasil dibuat!");
+        tampilkanTiket();
+      });
+    }
+
+    function tampilkanTiket() {
+      const tbody = document.getElementById("tabelTiket");
+      tbody.innerHTML = "";
+
+      db.ref("tiket").once("value", snapshot => {
+        snapshot.forEach(child => {
+          const data = child.val();
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${child.key}</td>
+            <td>${data.username}</td>
+            <td>${data.hadiah}</td>
+            <td>${data.sudah_dipakai ? "✅ Sudah Dipakai" : "❌ Belum"}</td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+    }
+
+    tampilkanTiket();
+  </script>
+</body>
+</html>
