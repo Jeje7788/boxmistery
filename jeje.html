@@ -1,221 +1,148 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>Mystery Box Mewah</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Admin Generator Tiket</title>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     body {
-      background: #000;
-      color: #fff;
-      text-align: center;
       font-family: 'Segoe UI', sans-serif;
-      padding: 20px;
+      background: #111;
+      color: #fff;
+      padding: 30px;
     }
-
-    .input-area {
-      margin-bottom: 30px;
-    }
-
-    .box-container {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 300px;
-    }
-
-    .mystery-box {
-      width: 180px;
-      height: 180px;
-      background: gold;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .mystery-box:hover {
-      transform: scale(1.1);
-    }
-
-    .reveal {
-      margin-top: 30px;
-      font-size: 24px;
-      display: none;
-      animation: fadeIn 1s ease forwards;
-    }
-
-    input {
+    input, button {
       padding: 10px;
-      border-radius: 8px;
+      margin: 5px;
+      border-radius: 6px;
       border: none;
+    }
+    input {
       width: 200px;
     }
-
     button {
-      padding: 10px 20px;
-      margin-left: 10px;
-      border: none;
-      border-radius: 8px;
-      background: #FFD700;
+      background: gold;
       cursor: pointer;
     }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      background: #222;
+      border-collapse: collapse;
     }
-
-    @keyframes shake {
-      0%, 100% { transform: rotate(0deg); }
-      10% { transform: rotate(4deg); }
-      20% { transform: rotate(-4deg); }
-      30% { transform: rotate(4deg); }
-      40% { transform: rotate(-4deg); }
-      50% { transform: rotate(3deg); }
-      60% { transform: rotate(-3deg); }
-      70% { transform: rotate(2deg); }
-      80% { transform: rotate(-2deg); }
-      90% { transform: rotate(1deg); }
+    th, td {
+      padding: 10px;
+      border: 1px solid #444;
+      text-align: left;
     }
-        .mystery-box {
-            width: 200px;
-            height: 200px;
-            background: #FFC107;
-            border-radius: 15px;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  </style>
+</head>
+<body>
+  <h2>🎫 Admin - Generator Tiket Hadiah</h2>
+      <input type="text" id="kode" placeholder="Kode Tiket" />
+        <input type="text" id="username" placeholder="Username" />
+  <input type="text" id="hadiah" placeholder="Hadiah" />
+  <button onclick="buatTiket()">Buat Tiket</button>
 
-.box-label {
-  font-weight: bold;
-  font-size: 20px;
-  color: black;
-  text-align: center;
+  <table>
+    <thead>
+      <tr>
+        <th>kode tiket</th>   
+        <th>Username</th>
+        <th>Hadiah</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="tabelTiket"></tbody>
+  </table>
+
+  <script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyAu5TUurLnkUTmZMFzG4UoIHMeFdyj0c2E",
+  authDomain: "misterybox-c0e5f.firebaseapp.com",
+  databaseURL: "https://misterybox-c0e5f-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "misterybox-c0e5f",
+  storageBucket: "misterybox-c0e5f.appspot.com",
+  messagingSenderId: "431263759277",
+  appId: "1:431263759277:web:6a470a789184d373f6ff24"
+};
+
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function buatTiket() {
+  const kode = document.getElementById("kode").value.trim();
+  const username = document.getElementById("username").value.trim();
+  const hadiah = document.getElementById("hadiah").value.trim();
+
+  if (!kode || !username || !hadiah) {
+    alert("Isi semua kolom!");
+    return;
+  }
+
+  // Simpan ke Firebase dengan timestamp
+  db.ref("tiket/" + kode).set({
+    username: username,
+    hadiah: hadiah,
+    sudah_dipakai: false,
+    timestamp: Date.now()
+  }, (error) => {
+    if (error) {
+      alert("Gagal menyimpan tiket!");
+    } else {
+      alert("Tiket berhasil dibuat!");
+      tampilkanTiket(); // Refresh tabel
+    }
+  });
+
+  // Kosongkan form
+  document.getElementById("kode").value = "";
+  document.getElementById("username").value = "";
+  document.getElementById("hadiah").value = "";
+}
+
+
+
+    function tampilkanTiket() {
+  const tbody = document.getElementById("tabelTiket");
+  tbody.innerHTML = "";
+
+  db.ref("tiket").once("value", snapshot => {
+    const dataArray = [];
+
+    snapshot.forEach(child => {
+      const data = child.val();
+      dataArray.push({
+        key: child.key,
+        username: data.username,
+        hadiah: data.hadiah,
+        sudah_dipakai: data.sudah_dipakai,
+        timestamp: data.timestamp || 0 // fallback jika belum ada timestamp
+      });
+    });
+
+    // Urutkan berdasarkan timestamp DESCENDING (terbaru di atas)
+    dataArray.sort((a, b) => b.timestamp - a.timestamp);
+
+    dataArray.forEach(data => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${data.key}</td>
+        <td>${data.username}</td>
+        <td>${data.hadiah}</td>
+        <td>${data.sudah_dipakai ? '✅ Sudah Dipakai' : '❌ Belum'}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  });
 }
 
 
 
 
-
-
-
-    .shake {
-      animation: shake 2s ease;
-    }
-  </style>
-</head>
-<body>
-  <h1>🎁 Mystery Box Mewah 🎁</h1>
-
-  <div class="input-area">
-    <input type="text" id="kodeTiket" placeholder="Masukkan Kode Tiket" />
-    <input type="text" id="username" placeholder="Masukkan Username" />
-    <button onclick="cekTiket()">Cek & Buka</button>
-  </div>
-
-  <div class="box-container">
-<div class="mystery-box" id="box" style="display:none;" onclick="bukaBox()">
-  <div class="box-label">BABIKAU</div>
-</div>
-</div>
-
-  </div>
-
-  <div class="reveal" id="hasilHadiah"></div>
-
-  <!-- Suara efek lokal -->
-  <audio id="sfxOpen" src="mystery_box_effect.mp3"></audio>
-
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAu5TUurLnkUTmZMFzG4UoIHMeFdyj0c2E",
-      authDomain: "misterybox-c0e5f.firebaseapp.com",
-      databaseURL: "https://misterybox-c0e5f-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "misterybox-c0e5f",
-      storageBucket: "misterybox-c0e5f.appspot.com",
-      messagingSenderId: "431263759277",
-      appId: "1:431263759277:web:6a470a789184d373f6ff24"
-    };
-
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    let currentKode = "";
-
-    function cekTiket() {
-      const username = document.getElementById("username").value.trim().toLowerCase();
-      const kodeTiket = document.getElementById("kodeTiket").value.trim();
-
-      if (!username || !kodeTiket) return alert("Lengkapi input dulu");
-
-      db.ref("tiket/" + kodeTiket).once("value", snapshot => {
-        if (!snapshot.exists()) return alert("Kode tiket tidak ditemukan");
-
-        const data = snapshot.val();
-        const dbUsername = (data.username || "").trim().toLowerCase();
-
-        if (data.sudah_dipakai) return alert("Tiket sudah dipakai!");
-        if (dbUsername !== username) return alert("Username tidak cocok!");
-
-        document.getElementById("box").style.display = "block";
-        currentKode = kodeTiket;
-        alert("Tiket Benar! Klik kotak untuk membuka hadiah.");
-      });
-    }
-
-    function bukaBox() {
-      const box = document.getElementById("box");
-      const sfx = document.getElementById("sfxOpen");
-
-      box.classList.add("shake");
-
-      setTimeout(() => {
-        box.classList.remove("shake");
-      }, 2000);
-
-      db.ref("tiket/" + currentKode).once("value", snapshot => {
-        const data = snapshot.val();
-
-        setTimeout(() => {
-          // tampilkan hadiah
-          document.getElementById("hasilHadiah").style.display = "block";
-          document.getElementById("hasilHadiah").innerText = "🎉 Kamu mendapatkan: " + data.hadiah;
-
-          // mainkan suara efek
-          sfx.play().catch(err => console.warn("Gagal memainkan suara:", err));
-
-          // konfeti animasi
-          confetti({
-            particleCount: 150,
-            spread: 90,
-            origin: { y: 0.6 }
-          });
-
-          // update status tiket
-          db.ref("tiket/" + currentKode).update({ sudah_dipakai: true });
-
-          // log klaim
-          db.ref("log/" + currentKode).set({
-            username: data.username,
-            hadiah: data.hadiah,
-            waktu: new Date().toISOString()
-          });
-
-          // disable klik ulang
-          box.onclick = null;
-        }, 2000);
-      });
-    }
+    tampilkanTiket();
   </script>
 </body>
 </html>
