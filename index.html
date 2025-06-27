@@ -82,6 +82,33 @@
       80% { transform: rotate(-2deg); }
       90% { transform: rotate(1deg); }
     }
+        .mystery-box {
+            width: 200px;
+            height: 200px;
+            background: #FFC107;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+.box-label {
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  text-align: center;
+}
+
+
+
+
+
+
 
     .shake {
       animation: shake 2s ease;
@@ -98,7 +125,11 @@
   </div>
 
   <div class="box-container">
-    <div class="mystery-box" id="box" style="display:none;" onclick="bukaBox()"></div>
+<div class="mystery-box" id="box" style="display:none;" onclick="bukaBox()">
+  <div class="box-label">BABIKAU</div>
+</div>
+</div>
+
   </div>
 
   <div class="reveal" id="hasilHadiah"></div>
